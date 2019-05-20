@@ -71,7 +71,7 @@ class _FormPageState extends State<FormPage> {
         final AuthCredential credential = FacebookAuthProvider.getCredential(accessToken: myToken.token);
         FirebaseUser user = await FirebaseAuth.instance.signInWithCredential(credential);
         print("signed in " + user.displayName);
-        print(result.accessToken.token);
+        //print(result.accessToken.token);
         break;
       case FacebookLoginStatus.cancelledByUser:
         print('CANCELED BY USER');
