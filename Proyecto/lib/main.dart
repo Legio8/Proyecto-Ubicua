@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'Primera.dart';
 import 'Registrarse.dart';
 
@@ -59,6 +61,26 @@ class _FormPageState extends State<FormPage> {
       }
      //Navigator.of(context).pushNamedAndRemoveUntil('/primera', ModalRoute.withName('/'));
   }
+
+  login() async {
+    final facebookLogin = new FacebookLogin();
+    final result = await facebookLogin.logInWithReadPermissions(['email']);
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        print(result.accessToken.token.toString());
+        final AuthCredential credential = FacebookAuthProvider.getCredential(accessToken: result.accessToken.toString());
+        FirebaseUser user = await FirebaseAuth.instance.signInWithCredential(credential);
+        print("signed in " + user.displayName);
+        print(result.accessToken.token);
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        print('CANCELED BY USER');
+        break;
+      case FacebookLoginStatus.error:
+        print(result.errorMessage);
+        break;
+    }
+  }
     
       @override
       Widget build(BuildContext context) {
@@ -117,9 +139,15 @@ class _FormPageState extends State<FormPage> {
                         Navigator.push(context,MaterialPageRoute(builder: (context) => Registrarse()),);
                       },
                     ),
+                    new Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                    ),
+                    FacebookSignInButton(
+                      onPressed: login,
+                  ),
                   ],
                 ),
               ),
             ));
       }
-}
+  }
