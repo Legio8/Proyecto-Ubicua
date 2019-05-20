@@ -67,8 +67,8 @@ class _FormPageState extends State<FormPage> {
     final result = await facebookLogin.logInWithReadPermissions(['email']);
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
-        print(result.accessToken.token.toString());
-        final AuthCredential credential = FacebookAuthProvider.getCredential(accessToken: result.accessToken.toString());
+        FacebookAccessToken myToken = result.accessToken;
+        final AuthCredential credential = FacebookAuthProvider.getCredential(accessToken: myToken.token);
         FirebaseUser user = await FirebaseAuth.instance.signInWithCredential(credential);
         print("signed in " + user.displayName);
         print(result.accessToken.token);
