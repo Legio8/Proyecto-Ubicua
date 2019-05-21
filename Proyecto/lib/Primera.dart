@@ -46,7 +46,7 @@ class MyHomePage extends StatelessWidget {
         shrinkWrap: true,
         padding: const EdgeInsets.all(20.0),
         children: <Widget>[
-          Center(child: Image.asset('images/camaro.png'),),
+          Center(child: Image.asset('images/imagen1.jpg'),),
           new Padding(padding: const EdgeInsets.only(top: 20.0),),
           Center(child: Text("Automovil camaro de agencia 2019 totalmente equipado con estereo, aire acondicionado,asientos de piel y direccion hidraulica para un mejor movimiento a la hora de manejar",textAlign: TextAlign.justify,),),
           new Padding(padding: const EdgeInsets.only(top: 20.0),),
@@ -54,9 +54,7 @@ class MyHomePage extends StatelessWidget {
             child: new Text("Ir",style: new TextStyle(color: Colors.white),),
             color: Colors.blue,
             onPressed: (){
-              Navigator.of(context).pushNamed('/producto');/*Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (context) => Producto()),);*/
+              Navigator.of(context).pushNamed('/producto');
             },
           ),
         ],

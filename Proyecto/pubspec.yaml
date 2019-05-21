@@ -44,42 +44,19 @@ flutter:
   uses-material-design: true
 
   assets:
-  - images/camaro.png
+  - images/imagen1.jpg
+  - images/imagen2.jpg
+  - images/imagen3.jpg
+  - images/imagen4.jpg
+  - images/imagen5.jpg
+  - images/imagen6.jpg
+  - images/imagen7.jpg
+  - images/imagen8.jpg
+  - images/imagen9.jpg
+  - images/imagen10.jpg
+  - images/imagen11.jpg
+  - images/imagen12.jpg
   - images/doge.jpg
-  - images/carro1.jpg
-  - images/carro2.jpg
-  - images/carro3.jpg
-  - images/carro4.jpg
-  - images/carro5.jpg
-  - images/carro6.jpg
-  - images/carro7.jpg
-  - images/carro8.jpg
-  - images/carro9.jpg
-  - images/carro10.jpg
-  - images/carro11.jpg
-  - images/carro12.jpg
-  - images/carro13.jpeg
-  - images/carro14.jpg
-  - images/carro15.jpg
-  - images/carro16.jpg
-  - images/carro17.jpg
-  - images/carro18.jpg
-  - images/carro19.jpg
-  - images/carro20.jpg
-  - images/carro21.jpg
-  - images/carro22.jpg
-  - images/carro23.jpg
-  - images/carro24.jpg
-  - images/carro25.jpg
-  - images/carro26.jpg
-  - images/carro27.jpg
-  - images/carro28.jpg
-  - images/carro29.jpg
-  - images/carro30.jpg
-  - images/carro31.jpg
-  - images/carro32.jpg
-  - images/carro33.jpg
-  - images/carro34.jpg
   - images/tarjeta.png
   - images/comparfin.jpg
 

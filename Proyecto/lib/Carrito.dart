@@ -48,7 +48,7 @@ class Carrito extends StatelessWidget{
                              child: Row(
                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                children: <Widget>[
-                                 Image.asset('images/carro3.jpg',width: 90.0,height: 50.0,),
+                                 Image.asset('images/imagen2.jpg',width: 90.0,height: 50.0,),
                                  Text("2",),
                                  Text("500,000",),
                              ],
@@ -62,7 +62,7 @@ class Carrito extends StatelessWidget{
                              child: Row(
                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                children: <Widget>[
-                                 Image.asset('images/carro1.jpg',width: 90.0,height: 50.0,),
+                                 Image.asset('images/imagen3.jpg',width: 90.0,height: 50.0,),
                                  Text("1",),
                                  Text("300,000",),
                              ],
@@ -77,7 +77,7 @@ class Carrito extends StatelessWidget{
                              child: Row(
                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                children: <Widget>[
-                                 Image.asset('images/carro2.jpg',width: 90.0,height: 50.0,),
+                                 Image.asset('images/imagen4.jpg',width: 90.0,height: 50.0,),
                                  Text("1",),
                                  Text("400,000",),
                              ],

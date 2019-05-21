@@ -59,12 +59,9 @@ class _FormPageState extends State<FormPage> {
         FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _usuario, password: _contra);
         Usuario usuario = Usuario(user: user,isfacebook: false);
         Navigator.push(context, MaterialPageRoute(builder: (context) => new Primera(user: usuario)));
-        //Navigator.of(context).pushNamedAndRemoveUntil('/primera', ModalRoute.withName('/'));
-        //Navigator.of(context).pushNamedAndRemoveUntil('/primera', ModalRoute.withName('/'));
       }catch(e){
         Toast.show(e.errorMessage ,context ,duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
       }
-     //Navigator.of(context).pushNamedAndRemoveUntil('/primera', ModalRoute.withName('/'));
   }
 
   login() async {
@@ -77,7 +74,6 @@ class _FormPageState extends State<FormPage> {
         FirebaseUser user = await FirebaseAuth.instance.signInWithCredential(credential);
         Usuario usuario = Usuario(user: user,isfacebook: true);
         Navigator.push(context, MaterialPageRoute(builder: (context) => new Primera(user: usuario)));
-        //print(result.accessToken.token);
         break;
       case FacebookLoginStatus.cancelledByUser:
         Toast.show("Cancelado por el usuario",context ,duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);

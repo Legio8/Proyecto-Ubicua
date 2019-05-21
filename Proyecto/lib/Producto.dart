@@ -30,7 +30,7 @@ class Producto extends StatelessWidget{
                          GestureDetector(
                            child: Hero(
                              tag: 'imageHero',
-                             child: Image.asset('images/camaro.png',width: 150.0,height: 100.0,),
+                             child: Image.asset('images/imagen1.jpg',width: 150.0,height: 100.0,),
                              ),
                            onTap: () {
                              Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -73,7 +73,7 @@ class DetailScreen extends StatelessWidget {
         child: Center(
           child: Hero(
             tag: 'imageHero',
-            child: Image.asset('images/camaro.png',fit: BoxFit.contain,)
+            child: Image.asset('images/imagen1.jpg',fit: BoxFit.contain,)
           ),
         ),
         onTap: () {
