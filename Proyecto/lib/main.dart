@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
+import 'package:toast/toast.dart';
+import 'Usuario.dart';
 import 'Primera.dart';
 import 'Registrarse.dart';
 
@@ -55,9 +57,12 @@ class _FormPageState extends State<FormPage> {
   void performLogin()  async{
     try{
         FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _usuario, password: _contra);
-        Navigator.of(context).pushNamedAndRemoveUntil('/primera', ModalRoute.withName('/'));
+        Usuario usuario = Usuario(user: user,isfacebook: false);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => new Primera(user: usuario)));
+        //Navigator.of(context).pushNamedAndRemoveUntil('/primera', ModalRoute.withName('/'));
+        //Navigator.of(context).pushNamedAndRemoveUntil('/primera', ModalRoute.withName('/'));
       }catch(e){
-        print(e.message);
+        Toast.show(e.errorMessage ,context ,duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
       }
      //Navigator.of(context).pushNamedAndRemoveUntil('/primera', ModalRoute.withName('/'));
   }
@@ -70,14 +75,15 @@ class _FormPageState extends State<FormPage> {
         FacebookAccessToken myToken = result.accessToken;
         final AuthCredential credential = FacebookAuthProvider.getCredential(accessToken: myToken.token);
         FirebaseUser user = await FirebaseAuth.instance.signInWithCredential(credential);
-        print("signed in " + user.displayName);
+        Usuario usuario = Usuario(user: user,isfacebook: true);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => new Primera(user: usuario)));
         //print(result.accessToken.token);
         break;
       case FacebookLoginStatus.cancelledByUser:
-        print('CANCELED BY USER');
+        Toast.show("Cancelado por el usuario",context ,duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
         break;
       case FacebookLoginStatus.error:
-        print(result.errorMessage);
+        Toast.show(result.errorMessage ,context ,duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
         break;
     }
   }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:flutter/services.dart';
+import 'package:toast/toast.dart';
 
 void main() => runApp(new Registrarse());
 
@@ -40,11 +43,26 @@ class _FormPageState extends State<Registrarse> {
     try{
         FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _usuario, password: _contra);
         user.sendEmailVerification();
-        Navigator.of(context).pop();
+        Flushbar(
+          title:  "Confirmacion",
+          message:  "Se envio un correo de verificacion para que pueda iniciar sesion",
+          duration:  Duration(seconds: 4),
+          aroundPadding: EdgeInsets.all(8),
+          borderRadius: 8,
+        )..show(context).then((r)=> Navigator.pop(context));
       }catch(e){
-        print(e.message);
+        if(e is PlatformException){
+          if(e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
+            Toast.show("Usuario ya existe",context ,duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+          }
+          if(e.code == 'ERROR_INVALID_EMAIL') {
+            Toast.show("Formato de correo invalido",context ,duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+          }
+          if(e.code == 'ERROR_WEAK_PASSWORD') {
+            Toast.show("Contraseña debil",context ,duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+          }
+        }
       }
-     //Navigator.of(context).pushNamedAndRemoveUntil('/primera', ModalRoute.withName('/'));
   }
     
       @override

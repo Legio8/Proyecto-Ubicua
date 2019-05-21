@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Usuario.dart';
 import 'Producto.dart';
 import 'Carrito.dart';
 import 'Pagar.dart';
@@ -9,14 +10,16 @@ import 'Cajon.dart';
 void main() => runApp(Primera());
 
 class Primera extends StatelessWidget {
-  final appTitle = 'Principal';
-  Primera();
+  Primera({Key key, this.user}) : super(key: key);
+  final Usuario user;
+  
+  //Primera();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: appTitle,
-      home: MyHomePage(title: appTitle),
+      title: 'Principal',
+      home: MyHomePage(user: user),
        routes: <String, WidgetBuilder>{ //app routes
       '/producto': (BuildContext context) => new Producto(),
       '/carrito': (BuildContext context) => new Carrito(),
@@ -28,16 +31,15 @@ class Primera extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final String title;
-
-  MyHomePage({Key key, this.title}) : super(key: key);
+  final Usuario user;
+  MyHomePage({Key key, this.user}) : super(key: key);
 
 //Center(child: Text('Pantalla principal')),
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title),),
-      drawer:new Cajon(),
+      appBar: AppBar(title: Text('Principal'),),
+      drawer:new Cajon(usuario: user),
       body: ListView(
         shrinkWrap: true,
         padding: const EdgeInsets.all(20.0),
