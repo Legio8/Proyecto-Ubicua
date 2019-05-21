@@ -5,6 +5,7 @@ import 'Carrito.dart';
 import 'Pagar.dart';
 import 'Finalizada.dart';
 import 'Cajon.dart';
+import 'main.dart';
 
 
 void main() => runApp(Primera());
@@ -25,6 +26,7 @@ class Primera extends StatelessWidget {
       '/carrito': (BuildContext context) => new Carrito(),
       '/pagar': (BuildContext context) => new Pagar(),
       '/finalizada': (BuildContext context) => new Finalizada(),
+      '/main': (BuildContext context) => new MyApp(),
     },
     );
   }

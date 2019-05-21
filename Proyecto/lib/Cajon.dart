@@ -73,10 +73,10 @@ final Usuario usuario;
             },
           ),
           ListTile(
-            title: Text("Salir",style: TextStyle(color: Colors.blueAccent,)),
+            title: Text("Cerrar sesion"),
             onTap: (){
               logout();
-              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context,'/main');
             }
           ),
        ],
@@ -143,10 +143,10 @@ final Usuario usuario;
             },
           ),
           ListTile(
-            title: Text("Salir",style: TextStyle(color: Colors.blueAccent,)),
+            title: Text("Cerrar Sesion"),
             onTap: (){
               logout();
-              Navigator.pop(context);
+             Navigator.pushReplacementNamed(context,'/main');
             }
           ),
        ],
@@ -154,7 +154,7 @@ final Usuario usuario;
      );
     }
   }
-  
+
   logout() async {
     await FirebaseAuth.instance.signOut();
   }
