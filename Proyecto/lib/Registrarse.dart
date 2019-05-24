@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
 import 'package:toast/toast.dart';
@@ -18,6 +19,8 @@ class _FormPageState extends State<Registrarse> {
 
   String _usuario;
   String _contra;
+  String _tel;
+  String _nomb;
 
   @override
   void initState() {
@@ -43,6 +46,7 @@ class _FormPageState extends State<Registrarse> {
     try{
         FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _usuario, password: _contra);
         user.sendEmailVerification();
+        await Firestore.instance.collection('Cliente').document(user.uid).setData({'nombre': _nomb, 'telefono': _tel});
         Flushbar(
           title:  "Confirmacion",
           message:  "Se envio un correo de verificacion para que pueda iniciar sesion",
@@ -88,6 +92,9 @@ class _FormPageState extends State<Registrarse> {
                       },
                       onSaved: (val) => _usuario = val,
                     ),
+                    new Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                    ),
                     new TextFormField(
                       decoration: new InputDecoration(labelText: "Contraseña"),
                       validator: (contra) {
@@ -97,6 +104,33 @@ class _FormPageState extends State<Registrarse> {
                       },
                       onSaved: (val) => _contra = val,
                       obscureText: true,
+                    ),
+                    new Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                    ),
+                    new TextFormField(
+                      decoration: new InputDecoration(labelText: "Nombre"),
+                      validator: (nomb) {
+                        if(nomb.isEmpty){
+                          return "Llene este campo";
+                        }
+                      },
+                      onSaved: (val) => _nomb = val,
+                      keyboardType: TextInputType.text,
+                    ),
+                     new Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                    ),
+                    new TextFormField(
+                      decoration: new InputDecoration(labelText: "Telefono"),
+                      validator: (tel) {
+                        if(tel.isEmpty){
+                          return "Llene este campo";
+                        }
+                      },
+                      onSaved: (val) => _tel = val,
+                      keyboardType: TextInputType.phone,
+                      maxLength: 10,
                     ),
                     new Padding(
                       padding: const EdgeInsets.only(top: 20.0),

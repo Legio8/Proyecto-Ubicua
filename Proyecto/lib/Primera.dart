@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Usuario.dart';
 import 'Producto.dart';
 import 'Carrito.dart';
@@ -40,25 +41,41 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Principal'),),
+      appBar: AppBar(title: Text('Menu'),),
       drawer:new Cajon(usuario: user),
-      body: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(20.0),
-        children: <Widget>[
-          Center(child: Image.asset('images/imagen1.jpg'),),
-          new Padding(padding: const EdgeInsets.only(top: 20.0),),
-          Center(child: Text("Automovil camaro de agencia 2019 totalmente equipado con estereo, aire acondicionado,asientos de piel y direccion hidraulica para un mejor movimiento a la hora de manejar",textAlign: TextAlign.justify,),),
-          new Padding(padding: const EdgeInsets.only(top: 20.0),),
-          new RaisedButton(
-            child: new Text("Ir",style: new TextStyle(color: Colors.white),),
-            color: Colors.blue,
-            onPressed: (){
-              Navigator.of(context).pushNamed('/producto');
-            },
-          ),
-        ],
-      ),
-    );
+      body: StreamBuilder(
+          stream: Firestore.instance.collection("Menu").snapshots(),
+          builder: (context,snapshot){
+            if(!snapshot.hasData){
+              return new Center(child: Text("Cargando....",textAlign: TextAlign.justify,),);
+            }
+            else
+            {
+              return ListView.builder(
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (context,index){
+                  DocumentSnapshot item = snapshot.data.documents[index];
+                  return new Column(children: <Widget>[
+                    Center(child: Image.asset(item['imagen']),),
+                    new Padding(padding: const EdgeInsets.only(top: 20.0),),
+                    Center(child: Text(item['Descripcion'],textAlign: TextAlign.justify,),),
+                    new Padding(padding: const EdgeInsets.only(top: 20.0),),
+                    Center(child: Text("Precio: "+ item['Precio'].toString(),textAlign: TextAlign.right,),),
+                    new Padding(padding: const EdgeInsets.only(top: 20.0),),
+                    new RaisedButton(
+                      child: new Text("Ir",style: new TextStyle(color: Colors.white),),
+                      color: Colors.blue,
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => new Producto(item: item)));
+                      },
+                    )
+                  ]
+                  );
+                },
+              );
+            }
+          },
+        )
+      );
   }
 }

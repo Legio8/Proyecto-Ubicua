@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() => runApp(new Producto());
 
 class Producto extends StatelessWidget{
-
+Producto({Key key, this.item}) : super(key: key);
+final DocumentSnapshot item;
     
       @override
       Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class Producto extends StatelessWidget{
                          GestureDetector(
                            child: Hero(
                              tag: 'imageHero',
-                             child: Image.asset('images/imagen1.jpg',width: 150.0,height: 100.0,),
+                             child: Image.asset(item['imagen'],width: 150.0,height: 100.0,),
                              ),
                            onTap: () {
                              Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -40,7 +42,7 @@ class Producto extends StatelessWidget{
                          ),
                          new Padding(padding: const EdgeInsets.only(right: 15.0),),
                          Column(children: <Widget>[
-                           Text("Precio: 250,000"),
+                           Text("Precio: "+item['Precio'].toString()),
                            new Padding(padding: const EdgeInsets.only(top: 20.0),),
                            new RaisedButton(
                              child: new Text("Comprar",style: new TextStyle(color: Colors.white),),
@@ -56,7 +58,7 @@ class Producto extends StatelessWidget{
                       new Padding(padding: const EdgeInsets.only(top: 50.0),),
                       Text("Descripcion: ",textAlign: TextAlign.left,),
                       new Padding(padding: const EdgeInsets.only(top: 20.0),),
-                      Text("Automovil camaro de agencia 2019 totalmente equipado con estereo, aire acondicionado,asientos de piel y direccion hidraulica para un mejor movimiento a la hora de manejar",textAlign: TextAlign.justify,),
+                      Text(item['Descripcion'],textAlign: TextAlign.justify,),
                      ],
                    ),
                   ],
