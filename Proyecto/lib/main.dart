@@ -90,7 +90,7 @@ class _FormPageState extends State<FormPage> {
             key: scaffoldKey,
             appBar: new AppBar(
               title: new Text("Inicio de sesion"),
-              
+              backgroundColor: Colors.orange,
             ),
             body: new Padding(
               padding: const EdgeInsets.all(20.0),
@@ -125,7 +125,7 @@ class _FormPageState extends State<FormPage> {
                         "Login",
                         style: new TextStyle(color: Colors.white),
                       ),
-                      color: Colors.blue,
+                      color: Colors.green[300],
                       onPressed: _submit,
                     ),
                     new Padding(
@@ -136,7 +136,7 @@ class _FormPageState extends State<FormPage> {
                         "Registrarse",
                         style: new TextStyle(color: Colors.white),
                       ),
-                      color: Colors.blue,
+                      color: Colors.green[300],
                       onPressed: (){
                         Navigator.push(context,MaterialPageRoute(builder: (context) => Registrarse()),);
                       },

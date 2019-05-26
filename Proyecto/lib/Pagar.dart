@@ -51,6 +51,7 @@ class _FormPageState extends State<Pagar> {
             key: scaffoldKey,
             appBar: new AppBar(
               title: new Text("Registro Tarjeta"),
+              backgroundColor: Colors.orange,
               leading: new IconButton(
                 icon: new Icon( Icons.arrow_back, color: Colors.white,          ),
                 onPressed: () {

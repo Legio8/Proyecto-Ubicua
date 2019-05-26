@@ -75,7 +75,7 @@ class _FormPageState extends State<Registrarse> {
             key: scaffoldKey,
             appBar: new AppBar(
               title: new Text("Registrar"),
-              
+              backgroundColor: Colors.orange,
             ),
             body: new Padding(
               padding: const EdgeInsets.all(20.0),
@@ -140,7 +140,7 @@ class _FormPageState extends State<Registrarse> {
                         "Registrarse",
                         style: new TextStyle(color: Colors.white),
                       ),
-                      color: Colors.blue,
+                      color: Colors.green[300],
                       onPressed: _submit,
                     )
                   ],

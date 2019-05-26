@@ -10,6 +10,7 @@ class Finalizada extends StatelessWidget{
         return new Scaffold(
             appBar: new AppBar(
               title: new Text("Compra Finalizada"),
+              backgroundColor: Colors.orange,
               leading: new IconButton(
                 icon: new Icon( Icons.arrow_back, color: Colors.white,          ),
                 onPressed: () {

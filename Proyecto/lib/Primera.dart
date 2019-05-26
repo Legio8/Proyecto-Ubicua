@@ -41,7 +41,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Menu'),),
+      appBar: AppBar(title: Text('Menu'),backgroundColor: Colors.orange,),
       drawer:new Cajon(usuario: user),
       body: StreamBuilder(
           stream: Firestore.instance.collection("Menu").snapshots(),
@@ -55,27 +55,51 @@ class MyHomePage extends StatelessWidget {
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context,index){
                   DocumentSnapshot item = snapshot.data.documents[index];
-                  return new Column(children: <Widget>[
-                    Center(child: Image.asset(item['imagen']),),
-                    new Padding(padding: const EdgeInsets.only(top: 20.0),),
-                    Center(child: Text(item['Descripcion'],textAlign: TextAlign.justify,),),
-                    new Padding(padding: const EdgeInsets.only(top: 20.0),),
-                    Center(child: Text("Precio: "+ item['Precio'].toString(),textAlign: TextAlign.right,),),
-                    new Padding(padding: const EdgeInsets.only(top: 20.0),),
-                    new RaisedButton(
-                      child: new Text("Ir",style: new TextStyle(color: Colors.white),),
-                      color: Colors.blue,
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => new Producto(item: item)));
-                      },
+                  return new Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Center(child: Image.asset(item['imagen']),),
+                        new Padding(padding: const EdgeInsets.only(top: 20.0,left: 20.0),),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            child: Text('Nombre: '+item['Nombre'],),
+                          ),
+                        ),
+                        new Padding(padding: const EdgeInsets.only(top: 20.0,left: 20.0),),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            child: Text('Descripcion:\n'+item['Descripcion'],),
+                          ),
+                        ),
+                        new Padding(padding: const EdgeInsets.only(top: 20.0,right: 20.0),),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            child: Text("Precio: "+ item['Precio'].toString(),),
+                          ),
+                        ),
+                        new Padding(padding: const EdgeInsets.only(top: 20.0),),
+                        new RaisedButton(
+                          child: new Text("Ir",style: new TextStyle(color: Colors.white),),
+                          color: Colors.green[300],
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => new Producto(item: item)));
+                          },
+                        ),
+                        new Padding(padding: const EdgeInsets.only(top: 20.0),),
+                      ],
                     )
-                  ]
                   );
-                },
-              );
-            }
-          },
-        )
+                  },
+                );
+              }
+            },
+          )
       );
   }
 }

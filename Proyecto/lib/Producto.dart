@@ -12,6 +12,7 @@ final DocumentSnapshot item;
         return new Scaffold(
             appBar: new AppBar(
               title: new Text("Producto"),
+              backgroundColor: Colors.orange,
               leading: new IconButton(
                 icon: new Icon( Icons.arrow_back, color: Colors.white,),
                 onPressed: () {

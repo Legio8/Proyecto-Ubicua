@@ -3,7 +3,7 @@ import 'package:ejemplo1/Usuario.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'Producto.dart';
-import 'Perfil.dart';
+import 'Profile.dart';
 import 'Direcciones.dart';
 import 'Categorias.dart';
 
@@ -34,7 +34,7 @@ final Usuario usuario;
         padding: EdgeInsets.zero,
        children: <Widget>[
          UserAccountsDrawerHeader(
-          decoration: BoxDecoration(color: Colors.red),
+          decoration: BoxDecoration(color: Colors.orange),
             margin: EdgeInsets.only(bottom: 40.0),                                            
           currentAccountPicture: Container(  
             decoration: BoxDecoration(
@@ -55,11 +55,11 @@ final Usuario usuario;
           )),
         ),
           ListTile(
-            title: Text("Producto"),
+            title: Text("Menu"),
             onTap: (){
               Navigator.push(
                 context, 
-                MaterialPageRoute(builder: (context) => Primera()),);
+                MaterialPageRoute(builder: (context) => Primera(user: usuario)),);
             },
           ),
           ListTile(
@@ -67,11 +67,11 @@ final Usuario usuario;
             onTap: (){
               Navigator.push(
                 context, 
-                MaterialPageRoute(builder: (context) => Perfil()),);
+                MaterialPageRoute(builder: (context) => Profile(usuario: usuario)),);
             },
           ),
           ListTile(
-            title: Text("Direcciones"),
+            title: Text("Carrito"),
             onTap: (){
               Navigator.push(
                 context, 
@@ -79,7 +79,7 @@ final Usuario usuario;
             },
           ),
           ListTile(
-            title: Text("Categorias",style: TextStyle(color: Colors.blueAccent,)),
+            title: Text("Ordenes",style: TextStyle(color: Colors.blueAccent,)),
             onTap: (){
               Navigator.push(
                 context, 
