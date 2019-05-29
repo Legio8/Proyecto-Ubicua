@@ -80,7 +80,7 @@ class MyHomePage extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerRight,
                           child: Container(
-                            child: Text("Precio: "+ item['Precio'].toString(),),
+                            child: Text("Precio: \$"+ item['Precio'].toString(),),
                           ),
                         ),
                         new Padding(padding: const EdgeInsets.only(top: 20.0),),
@@ -88,7 +88,7 @@ class MyHomePage extends StatelessWidget {
                           child: new Text("Ir",style: new TextStyle(color: Colors.white),),
                           color: Colors.green[300],
                           onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => new Producto(item: item)));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => new Producto(item: item,usuario:user)));
                           },
                         ),
                         new Padding(padding: const EdgeInsets.only(top: 20.0),),

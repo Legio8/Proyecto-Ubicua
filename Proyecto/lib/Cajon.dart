@@ -2,10 +2,8 @@ import 'package:ejemplo1/Primera.dart';
 import 'package:ejemplo1/Usuario.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'Producto.dart';
 import 'Profile.dart';
-import 'Direcciones.dart';
-import 'Categorias.dart';
+import 'Carrito.dart';
 
 class Cajon extends StatelessWidget {
 Cajon({Key key, this.usuario}) : super(key: key);
@@ -55,7 +53,7 @@ final Usuario usuario;
           )),
         ),
           ListTile(
-            title: Text("Menu"),
+            title: Text("Menu",style: TextStyle(color: Colors.blue)),
             onTap: (){
               Navigator.push(
                 context, 
@@ -63,7 +61,7 @@ final Usuario usuario;
             },
           ),
           ListTile(
-            title: Text("Perfil",style: TextStyle(color: Colors.blueAccent,)),
+            title: Text("Perfil",),
             onTap: (){
               Navigator.push(
                 context, 
@@ -75,19 +73,11 @@ final Usuario usuario;
             onTap: (){
               Navigator.push(
                 context, 
-                MaterialPageRoute(builder: (context) => Direcciones()),);
+                MaterialPageRoute(builder: (context) => Carrito(usuario:usuario)),);
             },
           ),
           ListTile(
-            title: Text("Ordenes",style: TextStyle(color: Colors.blueAccent,)),
-            onTap: (){
-              Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (context) => Categorias()),);
-            },
-          ),
-          ListTile(
-            title: Text("Cerrar Sesion"),
+            title: Text("Cerrar Sesion",style: TextStyle(color: Colors.red)),
             onTap: (){
               logout();
              Navigator.pushReplacementNamed(context,'/main');

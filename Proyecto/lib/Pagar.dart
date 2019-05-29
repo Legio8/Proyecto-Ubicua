@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'Usuario.dart';
 
 
 void main() => runApp(new Pagar());
@@ -6,17 +8,24 @@ void main() => runApp(new Pagar());
 
 
 class Pagar extends StatefulWidget {
+  Pagar({Key key, this.usuario, this.total}) : super(key: key);
+  final Usuario usuario;
+  final int total;
   @override
-  _FormPageState createState() => new _FormPageState();
+  _FormPageState createState() => new _FormPageState(usuario: usuario, total:total );
 }
 
 class _FormPageState extends State<Pagar> {
+  _FormPageState({Key key,this.usuario,this.total});
+  Usuario usuario;
+  int total;
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
 
   String _numtar;
   String _fecha;
   String _nombre;
+  String hora;
 
   
 
@@ -36,13 +45,26 @@ class _FormPageState extends State<Pagar> {
     if (form.validate()) {
       form.save();
 
-      performLogin();
+      performLogin(_nombre,total,hora);
 
     }
   }
 
-  void performLogin() {
-   Navigator.of(context).pushNamed('/finalizada');
+  void anadeOrden(String nombreC,int total,String hora,) async{
+      CollectionReference f = Firestore.instance.collection('Carrito').document(usuario.user.uid).collection("Platillos");
+      QuerySnapshot a = await f.getDocuments();
+      a.documents.forEach((document) async{
+        await Firestore.instance.collection('Ordenes').document(usuario.user.uid).collection("Orden").document().setData({'Nombre': document['Nombre'], 'Cantidad':document['Cantidad']});
+      });
+      await Firestore.instance.collection('Ordenes').document(usuario.user.uid).setData({'Nombre': nombreC, 'Total': total, 'Hora':hora, 'Lista': 'No'});
+      a.documents.forEach((documento) async{
+        documento.reference.delete();
+      });
+    }
+
+  void performLogin(String nombreC,int total,String hora,) {
+    anadeOrden(nombreC,total,hora);
+    Navigator.of(context).pushNamed('/finalizada');
    }
     
       @override
@@ -103,13 +125,28 @@ class _FormPageState extends State<Pagar> {
                     new Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                     ),
+                    new TextFormField(
+                      decoration: new InputDecoration(labelText: "Hora para recoger", hintText: 'La hora en la que pasara por su comida (10 am a 4 pm)',),
+                      validator: (hr) {
+                        if(hr.contains(new RegExp(r'[a-z]')) || hr == ""){
+                          return "Hora invalida";
+                        }
+                      },
+                      onSaved: (val) => hora = val,
+                      keyboardType: TextInputType.number,
+                    ),
+                    new Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                    ),
                     new RaisedButton(
                       child: new Text(
                         "Pagar",
                         style: new TextStyle(color: Colors.white),
                       ),
-                      color: Colors.blue,
-                      onPressed: _submit,
+                      color: Colors.green,
+                      onPressed: (){
+                        _submit();
+                      }
                     ),
                   ],
                 ),

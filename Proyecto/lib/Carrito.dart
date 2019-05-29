@@ -1,107 +1,106 @@
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'Usuario.dart';
+import 'Pagar.dart';
 
 
 void main() => runApp(new Carrito());
 
 class Carrito extends StatelessWidget{
-
+Carrito({Key key, this.usuario}) : super(key: key);
+final Usuario usuario;
+    
     
       @override
-      Widget build(BuildContext context) {
+      Widget build(BuildContext context) {        
+        int totalFin= 0;
         return new Scaffold(
-            appBar: new AppBar(
-              title: new Text("Carrito"),
-              backgroundColor: Colors.orange,
-              leading: new IconButton(
-                icon: new Icon( Icons.arrow_back, color: Colors.white,          ),
-                onPressed: () {
-                   Navigator.pop(context);
+            body: StreamBuilder(
+              stream: Firestore.instance.collection("Carrito").document(usuario.user.uid).collection("Platillos").snapshots(),
+              builder: (context,snapshot){
+                
+                if(!snapshot.hasData){
+                  return new Center(child: Text("Cargando....",textAlign: TextAlign.justify,),);
+                }
+                else
+            {
+              return new NestedScrollView(
+                headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    new SliverAppBar(
+                      pinned: true,
+                      title: new Text('Carrito'),
+                      backgroundColor: Colors.orange,
+                      leading: new IconButton(
+                        icon: new Icon( Icons.arrow_back, color: Colors.white,),
+                        onPressed: () {
+                           Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  ];
                 },
-               ),
-            ),
-            body: new Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: new ListView(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(20.0),
+                body: new Column(
                   children: <Widget>[
-                   Table(
-                     defaultColumnWidth: IntrinsicColumnWidth(),
-                     border: TableBorder.all(width: 1.0, color: Colors.black),
-                     children: [
-                       TableRow( 
-                         children: [ TableCell(
-                           child: Row(
-                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                             children: <Widget>[
-                               Text("     Producto",),
-                               Text("   Cantidad",),
-                               Text(" Sub Total",),
-                             ],
-                           ),
-                         )
-                        ]
-                       ),
-                       TableRow(
-                         children: [ 
-                           TableCell(
-                             child: Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceAround,
-                               children: <Widget>[
-                                 Image.asset('images/imagen2.jpg',width: 90.0,height: 50.0,),
-                                 Text("2",),
-                                 Text("500,000",),
-                             ],
-                           ),
-                          )
-                         ]
-                       ),
-                       TableRow(
-                         children: [ 
-                           TableCell(
-                             child: Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceAround,
-                               children: <Widget>[
-                                 Image.asset('images/imagen3.jpg',width: 90.0,height: 50.0,),
-                                 Text("1",),
-                                 Text("300,000",),
-                             ],
-                           ),
-                          )
-                         ]
-                       ),
-                       TableRow(
-                         children: [ 
-                           TableCell(
-                             verticalAlignment: TableCellVerticalAlignment.middle,
-                             child: Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceAround,
-                               children: <Widget>[
-                                 Image.asset('images/imagen4.jpg',width: 90.0,height: 50.0,),
-                                 Text("1",),
-                                 Text("400,000",),
-                             ],
-                           ),
-                          )
-                         ]
-                       ),
-                     ],
-                     ),
-                     new Padding(padding: const EdgeInsets.only(top: 60.0),),
-                     Text("Total: ", textAlign: TextAlign.right,),
-                     Text("1,200,000", textAlign: TextAlign.right, style: TextStyle(color: Colors.red),),
-                     new Padding(padding: const EdgeInsets.only(top: 40.0),),
-                     new RaisedButton(
-                       child: new Text("Registrar Tarjeta",style: new TextStyle(color: Colors.white),),
-                       color: Colors.blue,
-                       onPressed: (){
-                         Navigator.of(context).pushNamed('/pagar');//Navigator.push(context, MaterialPageRoute(builder: (context) => Pagar()),);
-                       },
-                     ),
+                     new Container(
+                       height: 400.0,
+                        child: ListView.builder(
+                          itemCount: snapshot.data.documents.length,
+                          itemBuilder: (context,index){
+                          DocumentSnapshot item = snapshot.data.documents[index];
+                          int total = item['Precio'] * int.parse(item['Cantidad']);
+                          totalFin = totalFin + total;
+                          return new Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                            ),
+                            child: Row(children: <Widget>[
+                              Image.asset(item['imagen'],width: 150.0,height: 120.0,),
+                              new Padding(padding: const EdgeInsets.only(right: 15.0),),
+                              Column(children: <Widget>[
+                                new Padding(padding: const EdgeInsets.only(top: 10.0),),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
+                                    child: Text("Precio: \$"+ item['Precio'].toString(),),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
+                                    child: Text("Cantidad: "+item['Cantidad']),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
+                                    child: Text("Total: \$"+total.toString()),
+                                  ),
+                                ),
+                              ],
+                              ),
+                            ],
+                            )
+                          );
+                       }
+                      ),
+                    ),
+                    Text("Total a pagar: \$"+totalFin.toString()),
+                    new Padding(padding: const EdgeInsets.only(top: 10.0),),
+                  new RaisedButton(
+                    child: new Text("Pagar",style: new TextStyle(color: Colors.white),),
+                    color: Colors.green[300],
+                    onPressed: (){
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => new Pagar(usuario:usuario, total:totalFin)));
+                    },
+                  ),
                   ],
                 ),
-            )
+                );
+            }
+              }
+              )
+              
         );
       }
 }
