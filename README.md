@@ -13,6 +13,8 @@ Most of the images used in the project are assets but they are not in the reposi
 
 Some dependencies are not used.
 
+If you have any doubts about the code send me an email at legio108@gmail.com
+
 Proyecto en Flutter para android sobre una cocina economica.
 
 Este proyecto utiliza Firebase Auth & the Firebase BD (CloudFirestore) deberias revisar eso primero, [aquí](https://firebase.google.com) para agregar tu app a Firebase, para saber como funcionan los plugins para [Firebase Auth](https://pub.dev/packages/firebase_auth) & para [Cloud Firestore](https://pub.dev/packages/cloud_firestore).
@@ -24,3 +26,5 @@ Toda la explicacion del codigo esta en los archivos .dart (Codigo documentado) e
 La mayoria de imagenes usadas en el proyecto son assets pero la carpeta no esta en el repositorio (Añade tus imagenes).
 
 Algunas dependencias no son usadas.
+
+Dudas al correo legio108@gmail.com
