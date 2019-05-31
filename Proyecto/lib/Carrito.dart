@@ -3,7 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Usuario.dart';
 import 'Pagar.dart';
 
-
+//Pantalla del carrito recive el usuario
+//La variable total no sirve siempre muestra 0 ¿Arreglar? 
+//Cart screen recieves the user
+//The total variable doesnt work it always shows 0 ¿Fix?
 void main() => runApp(new Carrito());
 
 class Carrito extends StatelessWidget{
@@ -15,15 +18,22 @@ final Usuario usuario;
       Widget build(BuildContext context) {        
         int totalFin= 0;
         return new Scaffold(
+          //Igual que en la pantalla menu (Primera.dart) buscar explicacion ahi
+          //Same as the menu screen (Primera.dart) explained there
             body: StreamBuilder(
               stream: Firestore.instance.collection("Carrito").document(usuario.user.uid).collection("Platillos").snapshots(),
               builder: (context,snapshot){
-                
+                //no data loading screen
+                //Sin datos pantalla de carga
                 if(!snapshot.hasData){
                   return new Center(child: Text("Cargando....",textAlign: TextAlign.justify,),);
                 }
                 else
             {
+              //Muestra lso datos cuando haya
+              //En esta se muestran scroll views anidados
+              //Show data when it's there
+              //On this we show nested scroll view
               return new NestedScrollView(
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[

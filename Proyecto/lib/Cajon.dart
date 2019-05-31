@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'Profile.dart';
 import 'Carrito.dart';
 
+
+//Pantalla del drawer recibe el usuario para saber que informacion mostrar
+//Drawer screen receives the user so we know wich data to use
 class Cajon extends StatelessWidget {
 Cajon({Key key, this.usuario}) : super(key: key);
 final Usuario usuario;
@@ -16,6 +19,8 @@ final Usuario usuario;
     String imagen;
     String nombre;
     String correo;
+    //If para saber si inicio sesion con facebook y saber que datos mostrar
+    //If statement to know if facebook login & know wich data display
     if(usuario.isfacebook == true){
       imagen = usuario.user.photoUrl;
       nombre = usuario.user.displayName;
@@ -87,7 +92,8 @@ final Usuario usuario;
      ),
      );
   }
-
+  //Simple funcion para cerrar sesion
+  //log out function doesnt do much
   logout() async {
     await FirebaseAuth.instance.signOut();
   }

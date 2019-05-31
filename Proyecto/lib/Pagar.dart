@@ -4,8 +4,10 @@ import 'Usuario.dart';
 
 
 void main() => runApp(new Pagar());
-
-
+//Archivo que contiene la pantalla de pagar donde se registra una tarjeta, un nombre y la hora en la que pasara por la comida
+//Recive el usuario que va a pagar y el total del pago
+//File that contains the pay screen where it shows a credit card register, a name & the time the user picks up the food
+//Receives the user & the total of the payment
 
 class Pagar extends StatefulWidget {
   Pagar({Key key, this.usuario, this.total}) : super(key: key);
@@ -45,23 +47,39 @@ class _FormPageState extends State<Pagar> {
     if (form.validate()) {
       form.save();
 
+      //Despues de que se guarda la form se llama al metodo que tiene el metodo añade orden
+      //Inside the performlogin method is the add order method
       performLogin(_nombre,total,hora);
 
     }
   }
 
+  //Metodo que añade la orden y copia los items del carrito a la orden
+  //Function that adds the order and copies the items in the cart to that order
   void anadeOrden(String nombreC,int total,String hora,) async{
+      //Variable para obtener la instancia de la colleccion de platillos en carrito
+      //Variable to obtain the instance of the platillos collection in cart
       CollectionReference f = Firestore.instance.collection('Carrito').document(usuario.user.uid).collection("Platillos");
+      //Variable para obtener todos los documentos en platillos
+      //Variable to obtain the documents in the cart
       QuerySnapshot a = await f.getDocuments();
+      //Para cada elemnto se copia a la coleccion de orden en ordenes
+      //For each elemnt we add it to the order subcollection in orders
       a.documents.forEach((document) async{
         await Firestore.instance.collection('Ordenes').document(usuario.user.uid).collection("Orden").document().setData({'Nombre': document['Nombre'], 'Cantidad':document['Cantidad']});
       });
+      //En la misma orden se añade el nombre, hora, total y si esta lista la orden o no (De esta forma solo se agrega 1 orden por usuario ¿Arreglarlo?)
+      //In the same order we add the name, hour, total & if the order is ready or not (This way only allows 1 order per user ¿Fix it?)
       await Firestore.instance.collection('Ordenes').document(usuario.user.uid).setData({'Nombre': nombreC, 'Total': total, 'Hora':hora, 'Lista': 'No'});
+      //Se borran todos los elementos en carrito para que quede vacio y se pidan nuevos
+      //Delete all teh items in the cart so is empty and we can add new ones
       a.documents.forEach((documento) async{
         documento.reference.delete();
       });
     }
 
+//Funcion que llama a la funcion añade orden y se va a la pantalla de compra finalizada
+//Function that calls the anadeorden function then goes to the finished screen
   void performLogin(String nombreC,int total,String hora,) {
     anadeOrden(nombreC,total,hora);
     Navigator.of(context).pushNamed('/finalizada');

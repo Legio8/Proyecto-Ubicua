@@ -5,7 +5,10 @@ import 'Usuario.dart';
 
 void main() => runApp(new Producto());
 
-
+//Archivo que contiene la pantalla donde se muestra la imagen del producto, el precio, la cantidad que puede ingresar el usuario y añadir a carrito
+//Recibe un Documentsnapshot que es el item a mostrar y el usuario para saber a que carrito se añade
+//This file contains the Product screen where it shows the image of the product, price, the number o products the user wants, and add to cart button
+//Receives a Documentsnapshot that is the item to display and the user so we know wich cart use
 class Producto extends StatefulWidget {
   Producto({Key key, this.item, this.usuario}) : super(key: key);
   final DocumentSnapshot item;
@@ -18,7 +21,9 @@ class _FormPageState extends State<Producto> {
   _FormPageState({Key key, this.item, this.usuario});
   DocumentSnapshot item;
   Usuario usuario;
-  String valor = '1'; 
+  //Variable to know how many the user wants
+  String valor = '1'; //Variable para saber la cantidad que quiere el usuario
+  
   
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
@@ -40,7 +45,11 @@ class _FormPageState extends State<Producto> {
     if (form.validate()) {
       form.save();
 
+      //Llamada a la funcion para añadir a carrito
+      //Call to function to add to cart
       anadeCarro(nombreP,precioP, imagen); 
+      //Flushbar para mostrar que se añadio con exito y despues regresa a la pantalla de menu
+      //Flushbar to display a message that it's added to the cart then returns to the menu screen
       Flushbar(
           title:  "¡Añadido!",
           message:  "Se añadio el producto al carrito",
@@ -50,8 +59,11 @@ class _FormPageState extends State<Producto> {
         )..show(context).then((r)=> Navigator.pop(context));
     }
   }
-
+      //Funcion que añade el item al carrito en la BD de firebase 
+      //Function to add the item to the cart in the firebase DB.
      void anadeCarro(String nombreP,int precioP,String imagen) async{
+       //Simplemente se añade a la subcoleccion PLatillos y se agregan los datos
+       //It just adds the data to the subcollection Platillos
       await Firestore.instance.collection('Carrito').document(usuario.user.uid).collection("Platillos").document().setData({'Nombre': nombreP, 'Precio': precioP, 'Cantidad':valor,'imagen':imagen});
     }
       @override

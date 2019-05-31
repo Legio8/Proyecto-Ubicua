@@ -7,6 +7,9 @@ import 'Usuario.dart';
 import 'Primera.dart';
 import 'Registrarse.dart';
 
+
+//Pantalla form inicial de inicio de sesion
+//Login screen
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
@@ -54,9 +57,12 @@ class _FormPageState extends State<FormPage> {
     }
   }
 
+  //Funcion que inicia sesion con correo
   void performLogin()  async{
     try{
         FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _usuario, password: _contra);
+        //Se crea la variable usuario que se usara en toda la app
+        //We create the user variable that we use in the whole app
         Usuario usuario = Usuario(user: user,isfacebook: false);
         Navigator.push(context, MaterialPageRoute(builder: (context) => new Primera(user: usuario)));
       }catch(e){
@@ -64,17 +70,25 @@ class _FormPageState extends State<FormPage> {
       }
   }
 
+  //Metodo de login con facebook
+  //Function to login with facebook
   login() async {
     final facebookLogin = new FacebookLogin();
     final result = await facebookLogin.logInWithReadPermissions(['email']);
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
+        //Si se inicio sesion guardar el token 
+        //If logged in save the token
         FacebookAccessToken myToken = result.accessToken;
+        //Por alguna razon en las nuevas versiones (0.11.1) se necesita iniciar sesion con credencial y el token que se guardo antes
+        //For some reason in the new version (0.11.1) you need to sign in with credentials and the token we saved earlier 
         final AuthCredential credential = FacebookAuthProvider.getCredential(accessToken: myToken.token);
         FirebaseUser user = await FirebaseAuth.instance.signInWithCredential(credential);
         Usuario usuario = Usuario(user: user,isfacebook: true);
         Navigator.push(context, MaterialPageRoute(builder: (context) => new Primera(user: usuario)));
         break;
+        //Si hay errores mostrarlos
+        //If error show it
       case FacebookLoginStatus.cancelledByUser:
         Toast.show("Cancelado por el usuario",context ,duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
         break;

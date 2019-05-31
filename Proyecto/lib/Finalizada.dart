@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+
+
+//Pantalla que muestra que se realizo la compra exitosamente (Nada especial aqui)
+//Screen that shows that the purchase is finished (Nothing special here)
 void main() => runApp(new Finalizada());
 
 class Finalizada extends StatelessWidget{
@@ -14,6 +18,8 @@ class Finalizada extends StatelessWidget{
               leading: new IconButton(
                 icon: new Icon( Icons.arrow_back, color: Colors.white,          ),
                 onPressed: () {
+                  //Tal vez esto, al presionar el boton nos regresa a la pantalla de inicio y no a la anterior
+                  //Maybe this, the button goes back to the main screen not the one before 
                    Navigator.popUntil(context, ModalRoute.withName(Navigator.defaultRouteName));
                 },
                ),

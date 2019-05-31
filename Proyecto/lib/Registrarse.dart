@@ -5,6 +5,8 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
 import 'package:toast/toast.dart';
 
+//Archivo registrarse que contiene la pantalla para registrar a un usuario nuevo con correo, nombre y telefono
+//This file contains the register screen for a new user with email, name & phone number 
 void main() => runApp(new Registrarse());
 
 
@@ -17,6 +19,8 @@ class _FormPageState extends State<Registrarse> {
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
 
+  //Variables para guardar el correo, contraseña, tel, nombre
+  //Variables to storage email, password, phone, name
   String _usuario;
   String _contra;
   String _tel;
@@ -32,6 +36,8 @@ class _FormPageState extends State<Registrarse> {
     super.dispose();
   }
 
+  //Se guarda el estado de la form para poder tomar los valores ingresados
+  //It saves the form state so we can take the input values on the form
   void _submit() {
     final form = formKey.currentState;
 
@@ -42,11 +48,18 @@ class _FormPageState extends State<Registrarse> {
     }
   }
 
+  //Este metodo agrega al usuario con correo y contraseña ademas de registrar su nombre y telefono en la BD de firebase
+  //This method adds a user with email & password and puts the name and phone in the Firebase DB 
   void performLogin()  async{
     try{
+        //Crea el usuario con correo y contraseña
         FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _usuario, password: _contra);
-        user.sendEmailVerification();
+        user.sendEmailVerification(); //Envia email de verificacion al usuario
+        //Agrega el nombre y telefono a la BD
+        //Adds the name and phone to the DB
         await Firestore.instance.collection('Cliente').document(user.uid).setData({'nombre': _nomb, 'telefono': _tel});
+        //Flushbar que muestra el mensaje y al terminar regresa a la pantalla de inicio de sesion
+        //Flushbar that show a message, when is done goes back to the login screen
         Flushbar(
           title:  "Confirmacion",
           message:  "Se envio un correo de verificacion para que pueda iniciar sesion",
@@ -55,6 +68,7 @@ class _FormPageState extends State<Registrarse> {
           borderRadius: 8,
         )..show(context).then((r)=> Navigator.pop(context));
       }catch(e){
+        //Errores posibles
         if(e is PlatformException){
           if(e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
             Toast.show("Usuario ya existe",context ,duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
@@ -141,7 +155,8 @@ class _FormPageState extends State<Registrarse> {
                         style: new TextStyle(color: Colors.white),
                       ),
                       color: Colors.green[300],
-                      onPressed: _submit,
+                      onPressed: _submit, //When register button is hit call the submit method
+                      //Cuando se da click en registrar se llama al metodo submit 
                     )
                   ],
                 ),

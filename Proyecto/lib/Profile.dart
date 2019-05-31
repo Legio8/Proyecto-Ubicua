@@ -3,6 +3,9 @@ import 'Cajon.dart';
 import 'Usuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+//Archivo que contiene la pantalla para mostrar el perfil del usuario (Recibe un objeto usuario)
+//This file contains the screen to show the user's profile (Receives a Usuario object)
 void main() => runApp(new Profile());
 
 class Profile extends StatelessWidget {
@@ -12,10 +15,16 @@ final Usuario usuario;
 
   @override
   Widget build(BuildContext context) {
+    //Variables para guardar la imagen de perfil y los datos del usuario
+    //Variables to save the users data and image
     String imagen;
       String nombre;
       String correo;
       String tel;
+      //If para saber si el usuario entro con facebook o no
+      //Si es con facebook regresa un scaffold para eso, si no regresa otro diferente 
+      //If statement to know if the user loged in with facebook
+      //If it is loged in with facebook returns a scafold for that
       if(usuario.isfacebook == true){
         imagen = usuario.user.photoUrl;
         nombre = usuario.user.displayName;
@@ -60,6 +69,8 @@ final Usuario usuario;
       }
       else
       {
+        //Si no debemos buscar los datos del usuario
+      //If not we have to search for the users data
         imagen = 'https://banner2.kisspng.com/20180603/jx/kisspng-user-interface-design-computer-icons-default-stephen-salazar-photography-5b1462e1b19d70.1261504615280626897275.jpg';
         return Scaffold(
           appBar: AppBar(title: Text('Perfil'),),
@@ -75,6 +86,8 @@ final Usuario usuario;
                   for(int i=0;i<snapshot.data.documents.length;i++)
                   {
                     DocumentSnapshot item = snapshot.data.documents[i];
+                    //Se busca en cada documento para ver cual es el del usuario y asi sacar los datos
+                    //We search in each document to match the user uid & get the data
                     if(item.documentID == usuario.user.uid)
                     {
                       return ListView(
