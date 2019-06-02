@@ -53,7 +53,7 @@ class _FormPageState extends State<Producto> {
       Flushbar(
           title:  "¡Añadido!",
           message:  "Se añadio el producto al carrito",
-          duration:  Duration(seconds: 2),
+          duration:  Duration(seconds: 1),
           aroundPadding: EdgeInsets.all(8),
           borderRadius: 8,
         )..show(context).then((r)=> Navigator.pop(context));

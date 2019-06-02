@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'Profile.dart';
 import 'Carrito.dart';
+import 'Ordenes.dart';
 
 
 //Pantalla del drawer recibe el usuario para saber que informacion mostrar
@@ -79,6 +80,14 @@ final Usuario usuario;
               Navigator.push(
                 context, 
                 MaterialPageRoute(builder: (context) => Carrito(usuario:usuario)),);
+            },
+          ),
+          ListTile(
+            title: Text("Ordenes"),
+            onTap: (){
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) => Ordenes(usuario:usuario)),);
             },
           ),
           ListTile(

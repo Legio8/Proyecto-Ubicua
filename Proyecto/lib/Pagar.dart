@@ -63,14 +63,18 @@ class _FormPageState extends State<Pagar> {
       //Variable para obtener todos los documentos en platillos
       //Variable to obtain the documents in the cart
       QuerySnapshot a = await f.getDocuments();
+      //Variable para obtener el id del documento donde se guardan los platillos 
+      //Variable to save the id of the document of the food saved
+       DocumentReference doc = Firestore.instance.collection('Ordenes').document(usuario.user.uid).collection("Ordenes Usuario").document();//.collection("Platillos").add({'Nombre': document['Nombre'], 'Cantidad':document['Cantidad'],'imagen':document['imagen']});
       //Para cada elemnto se copia a la coleccion de orden en ordenes
       //For each elemnt we add it to the order subcollection in orders
       a.documents.forEach((document) async{
-        await Firestore.instance.collection('Ordenes').document(usuario.user.uid).collection("Orden").document().setData({'Nombre': document['Nombre'], 'Cantidad':document['Cantidad']});
+         await Firestore.instance.collection('Ordenes').document(usuario.user.uid).collection("Ordenes Usuario").document(doc.documentID).collection("Platillos").add({'Nombre': document['Nombre'], 'Cantidad':document['Cantidad'],'imagen':document['imagen']});
       });
-      //En la misma orden se añade el nombre, hora, total y si esta lista la orden o no (De esta forma solo se agrega 1 orden por usuario ¿Arreglarlo?)
-      //In the same order we add the name, hour, total & if the order is ready or not (This way only allows 1 order per user ¿Fix it?)
-      await Firestore.instance.collection('Ordenes').document(usuario.user.uid).setData({'Nombre': nombreC, 'Total': total, 'Hora':hora, 'Lista': 'No'});
+      //En la misma orden se añade el nombre, hora, total y si esta lista la orden o no 
+      //In the same order we add the name, hour, total & if the order is ready or not 
+      await Firestore.instance.collection('Ordenes').document(usuario.user.uid).collection("Ordenes Usuario").document(doc.documentID).setData({'Nombre': nombreC, 'Total': total, 'Hora':hora, 'Lista': 'No'});
+      //await Firestore.instance.collection('Ordenes').document(usuario.user.uid).collection("Ordenes Usuario").document(doc.documentID).setData({'Nombre': nombreC, 'Total': total, 'Hora':hora, 'Lista': 'No'});
       //Se borran todos los elementos en carrito para que quede vacio y se pidan nuevos
       //Delete all teh items in the cart so is empty and we can add new ones
       a.documents.forEach((documento) async{

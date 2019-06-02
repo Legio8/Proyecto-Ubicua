@@ -15,8 +15,7 @@ final Usuario usuario;
     
     
       @override
-      Widget build(BuildContext context) {        
-        int totalFin= 0;
+      Widget build(BuildContext context) {
         return new Scaffold(
           //Igual que en la pantalla menu (Primera.dart) buscar explicacion ahi
           //Same as the menu screen (Primera.dart) explained there
@@ -30,6 +29,7 @@ final Usuario usuario;
                 }
                 else
             {
+              int totalFin= 0;
               //Muestra lso datos cuando haya
               //En esta se muestran scroll views anidados
               //Show data when it's there
