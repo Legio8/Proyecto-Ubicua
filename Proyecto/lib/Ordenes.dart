@@ -4,10 +4,8 @@ import 'Usuario.dart';
 import 'Cajon.dart';
 import 'ProdOrden.dart';
 
-//Pantalla del carrito recive el usuario
-//La variable total no sirve siempre muestra 0 ¿Arreglar? 
-//Cart screen recieves the user
-//The total variable doesnt work it always shows 0 ¿Fix?
+//Pantalla donde se muestran las ordenes recive el usuario
+//Order screen where we show the orders the user has receives the user
 void main() => runApp(new Ordenes());
 
 class Ordenes extends StatelessWidget{

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Usuario.dart';
-import 'Cajon.dart';
 
-//Pantalla del carrito recive el usuario
-//La variable total no sirve siempre muestra 0 ¿Arreglar? 
-//Cart screen recieves the user
-//The total variable doesnt work it always shows 0 ¿Fix?
+//Pantalla donde se muestran los productos de la orden
+//Recive el usuario y el id del Documento 
+//Screen were we show the product that the order has
+//Receives the user and the document id
 void main() => runApp(new ProdOrden());
 
 class ProdOrden extends StatelessWidget{
